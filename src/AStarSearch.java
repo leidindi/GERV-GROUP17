@@ -4,14 +4,14 @@ import java.util.HashMap;
 import java.util.HashSet;
 
 
-//TEST
+
 
 //We only have to worry about what is happening here and implement these functions
 
 public class AStarSearch implements SearchAlgorithm {
 
 	private Heuristics heuristics;
-    //private HashMap<Integer, ArrayList<State>> myHashMap = new HashMap<Integer, ArrayList<State>>(); BLA
+    //private HashMap<Integer, ArrayList<State>> myHashMap = new HashMap<Integer, ArrayList<State>>();
 
 	private int nbNodeExpansions;
 	private int maxFrontierSize;
