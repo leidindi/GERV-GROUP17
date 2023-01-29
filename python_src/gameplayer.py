@@ -43,10 +43,10 @@ class GGPRequestHandler(BaseHTTPRequestHandler):
     print("sending: " + str(code) + " - " + message)
 
   def do_GET(self):
-  	self.respond(400, "Only POST requests are supported!")
-    
+    self.respond(400, "Only POST requests are supported!")
+  
   def do_PUT(self):
-  	self.respond(400, "Only POST requests are supported!")
+    self.respond(400, "Only POST requests are supported!")
 
   def do_POST(self):
     # Reads post request body

@@ -3,9 +3,8 @@ import collections
 ######################
 
 class Heuristics:
-
 	env = None
-
+	
 	# inform the heuristics about the environment, needs to be called before the first call to eval()
 	def init(self, env):
 		self.env = env
