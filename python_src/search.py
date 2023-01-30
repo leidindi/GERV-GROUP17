@@ -1,7 +1,7 @@
 import collections
 import heapq
 
-Node = collections.namedtuple('Node', ['value', 'parent', 'state', 'action'])
+Node = collections.namedtuple('Node', ['value', 'parent', 'state', 'action','g_score'])
 
 
 class Heuristics:
@@ -83,7 +83,9 @@ class AStarSearch(SearchAlgorithm):
         self.max_frontier_size = 0
         self.goal_node = None
         # Node = collections.namedtuple('Node', ['value', 'parent', 'state', 'action', 'g_score'])
-        root_node = Node(self.heuristics.eval(env.get_current_state()), None, env.get_current_state(), None, 0)
+        rootState = env.current_state
+        rootHeuristic = self.heuristics.eval(rootState)
+        root_node = Node(rootHeuristic, None, rootState, None, 0)
 
         open_heap = []
         heapq.heapify(open_heap)
@@ -106,9 +108,8 @@ class AStarSearch(SearchAlgorithm):
             legal_actions = env.get_legal_actions(currentNode.state)
 
             for actionnow in legal_actions:
-                statenow = env.get_next_state(env.get_current_state(), actionnow)
+                statenow = env.get_next_state(currentNode.state, actionnow)
                 if statenow in closed_map:
-                    print("palli er flottur")
                     continue
 
                 parentnow = currentNode
@@ -122,14 +123,20 @@ class AStarSearch(SearchAlgorithm):
                         newNode = Node(valuenow, parentnow, statenow, actionnow, g)
                         # replaces old state with a new node
                         open_map[statenow] = newNode
+
+                        # update the heap, so it will agree with the open_map
+                        open_heap.remove(statenow)
+                        heapq.heapify(open_heap)
                         heapq.heappush(open_heap, newNode)
                 else:
                     newNode = Node(valuenow, parentnow, statenow, actionnow, g)
+
+                    # add the node to the heap and map
                     open_map[statenow] = newNode
                     heapq.heappush(open_heap, newNode)
+                    self.nb_node_expansions += 1
 
                 # end of for
-
                 self.max_frontier_size = max(len(open_map), self.get_max_frontier_size())
             # end of while
             if len(open_heap) == 0:
