@@ -82,47 +82,58 @@ class AStarSearch(SearchAlgorithm):
         self.nb_node_expansions = 0
         self.max_frontier_size = 0
         self.goal_node = None
+        # Node = collections.namedtuple('Node', ['value', 'parent', 'state', 'action', 'g_score'])
+        root_node = Node(self.heuristics.eval(env.get_current_state()), None, env.get_current_state(), None, 0)
 
-        current_node = Node(self.heuristics.eval(env.get_current_state()), None, env.get_current_state(), None)
         open_heap = []
-        open_map = {current_node.state: current_node}
+        heapq.heapify(open_heap)
+
+        open_map = {root_node.state: root_node}
         closed_map = {}
-        heapq.heappush(open_heap, current_node)
-        g_score = 0
+
+        heapq.heappush(open_heap, root_node)
 
         while len(open_heap) > 0:
-            nextNode = heapq.heappop(open_heap)
+            # start by picking the best state available from the heapqueue
+            currentNode = heapq.heappop(open_heap)
 
-            closed_map[nextNode.state] = nextNode
-            nextState = nextNode.state
+            closed_map[currentNode.state] = currentNode
 
-            if env.is_goal_state(nextState):
-                self.goal_node = nextNode
+            if env.is_goal_state(currentNode.state):
+                self.goal_node = currentNode
                 break
 
-            legal_actions = env.get_legal_actions(nextNode.state)
-
-            g_score += env.get_cost(nextNode.state,nextNode.action)
+            legal_actions = env.get_legal_actions(currentNode.state)
 
             for actionnow in legal_actions:
-                parentnow = nextNode
-                statenow = env.get_next_state(env.get_current_state, actionnow)
-                valuenow = self.heuristics.eval(statenow) + g_score
-                nodenow = Node(valuenow, parentnow, statenow, actionnow)
+                statenow = env.get_next_state(env.get_current_state(), actionnow)
+                if statenow in closed_map:
+                    print("palli er flottur")
+                    continue
 
-                if nodenow.state in open_map.keys and g_score < open_map[nodenow.state].value - self.heuristics.eval(nodenow.state):
-                    open_map[nodenow.state] = nodenow
+                parentnow = currentNode
+                g = parentnow.g_score + env.get_cost(statenow, actionnow)
+                valuenow = self.heuristics.eval(statenow) + g
 
-                if not (nodenow.state in closed_map.keys):
-                    heapq.heappush(open_heap, nodenow)
-                    self.nb_node_expansions += 1
+                in_open_map = statenow in open_map
+                if in_open_map:
+                    if_its_less = g < open_map[statenow].g_score
+                    if if_its_less:
+                        newNode = Node(valuenow, parentnow, statenow, actionnow, g)
+                        # replaces old state with a new node
+                        open_map[statenow] = newNode
+                        heapq.heappush(open_heap, newNode)
+                else:
+                    newNode = Node(valuenow, parentnow, statenow, actionnow, g)
+                    open_map[statenow] = newNode
+                    heapq.heappush(open_heap, newNode)
 
-            if len(open_map) > self.get_max_frontier_size():
-                self.max_frontier_size = len(open_map)
+                # end of for
 
-        if len(open_heap) == 0:
-            return False
-
+                self.max_frontier_size = max(len(open_map), self.get_max_frontier_size())
+            # end of while
+            if len(open_heap) == 0:
+                return False
 
     def get_plan(self):
         if not self.goal_node:
