@@ -143,7 +143,7 @@ class Environment:
       return 1 + 50 * len(state.dirts)
     else:
       return 1
-
+ 
   def is_goal_state(self, state):
     return len(state.dirts)==0 and not state.turned_on
 

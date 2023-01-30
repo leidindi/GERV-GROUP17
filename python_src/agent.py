@@ -81,7 +81,7 @@ class VacuumCleanerAgent(Agent):
     return
 
   def next_action(self, percepts):
-    # execute actions from the plan one after the other
+    bla = self.plan
     a = self.plan.pop(0)
     print("executing " + a)
     return a
