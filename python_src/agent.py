@@ -69,7 +69,10 @@ class VacuumCleanerAgent(Agent):
 
     print("planning took %.2fs" % (end_time-start_time))
     print("number of node expansions: %d" % self.search_algorithm.get_nb_node_expansions())
-    print("node expansions per second: %.1f" % (self.search_algorithm.get_nb_node_expansions()/(end_time-start_time)))
+    if end_time-start_time <= 0:
+      print("node expansions per second: undefined, too little time to estimate")
+    else:
+      print("node expansions per second: %.1f" % (self.search_algorithm.get_nb_node_expansions()/(end_time-start_time)))
     print("maximal frontier size: %d nodes" % self.search_algorithm.get_max_frontier_size())
 
     if not self.plan:

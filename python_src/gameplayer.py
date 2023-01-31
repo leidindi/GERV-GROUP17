@@ -116,6 +116,7 @@ class GGPRequestHandler(BaseHTTPRequestHandler):
 def main():
   # TODO: use your own agent here
   search = AStarSearch(SimpleHeuristics())
+  #search = AStarSearch(CustomHeuristics())
   agent = VacuumCleanerAgent(search)
 
   # read command line argument(s)
