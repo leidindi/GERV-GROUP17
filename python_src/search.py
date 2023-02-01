@@ -108,6 +108,7 @@ class SearchAlgorithm:
 class AStarSearch(SearchAlgorithm):
     nb_node_expansions = 0
     max_frontier_size = 0
+    visitedspaces = 0
     goal_node = None
 
     def __init__(self, heuristic):
@@ -153,9 +154,12 @@ class AStarSearch(SearchAlgorithm):
                 valuenow = self.heuristics.eval(statenow) + g
 
                 in_open_map = statenow in open_map
-                if in_open_map:
+
+                turn_off_and_on_for_question_8 = False
+
+                if in_open_map and turn_off_and_on_for_question_8:
                     if_its_less = g < open_map[statenow].g_score
-                    if if_its_less and False:
+                    if if_its_less:
                         newNode = Node(valuenow, parentnow, statenow, actionnow, g)
                         # replaces old state with a new node
                         open_map[statenow] = newNode
