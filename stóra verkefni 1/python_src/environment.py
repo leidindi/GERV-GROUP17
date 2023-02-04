@@ -18,9 +18,9 @@ class Environment:
 
         # two steps forward and one step left/right
 
-        if self.can_move_n_steps_forward(state, y, 2, self.height - 3):
+        if self.can_move_n_steps_forward(state=state, y=y, max_height_black= 2, max_height_white = self.height - 3):
             if x > 0 and state.board[y + two_steps][x - 1] == EMPTY:
-                moves.append((x, y, x -1, y + two_steps))
+                moves.append((x, y, x - 1, y + two_steps))
 
             if x < self.width -1 and state.board[y + two_steps][x + 1] == EMPTY:
                 moves.append((x, y, x + 1, y + two_steps))
@@ -28,13 +28,20 @@ class Environment:
         # one step forward and two steps left/right
 
         if self.can_move_n_steps_forward(state, y, 1, self.height - 2):
-            if x > 0 and state.board[y + two_steps][x - 1] == EMPTY:
-                moves.append((x, y, x-1, y + two_steps))
+            if x > 0 and state.board[y + one_step][x - 2] == EMPTY:
+                moves.append((x, y, x - 2, y + one_step))
 
-            if x < self.width -1 and state.board[y + two_steps][x + 1] == EMPTY:
-                moves.append((x,y,x + 1,y + two_steps))
+            if x < self.width -1 and state.board[y + one_step][x + 2] == EMPTY:
+                moves.append((x, y, x + 2, y + one_step))
 
         # capture (diagonal) if it has an opponent
+        
+        if self.can_move_n_steps_forward(state, y, 1, self.height - 2):
+            if x > 0 and state.board[y + one_step][x - 1] == opponent:
+                moves.append((x, y, x - 1, y + one_step))
+
+            if x < self.width -1 and state.board[y + one_step][x + 1] == opponent:
+                moves.append((x, y, x + 1, y + one_step))
 
     def get_legal_moves(self, state):
         moves = []
@@ -44,7 +51,6 @@ class Environment:
             for x in range(self.width):
                 if state.board[y][x] == friendly:
                     self.get_moves(state, moves, y, x)
-
         return moves
 
 
@@ -52,6 +58,7 @@ class Environment:
         x1, y1, x2, y2 = move
         state.board[y2][x2], state.board[y1][x1] = state.board[y1][x1], EMPTY
         state.white_turn = not state.white_turn
+    
     
     def was_diagonal_move(self, move):
         x1, y1, x2, y2 = move
@@ -89,3 +96,4 @@ if __name__ == "__main__":
     env.move(env.current_state, (0,0,4,4))
     print(env.current_state)
     print(env.get_legal_moves(env.current_state))
+    print(len(env.get_legal_moves(env.current_state)))

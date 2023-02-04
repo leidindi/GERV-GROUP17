@@ -10,6 +10,7 @@ from http.server import HTTPServer, BaseHTTPRequestHandler
 import re
 import sys
 from agent import *
+from my_agent import *
 
 #########
 
@@ -135,8 +136,8 @@ class GGPRequestHandler(BaseHTTPRequestHandler):
 
 def main():
     # use your own agent here
-    agent = RandomAgent()
-    #agent = Agent()
+    # agent = RandomAgent()
+    agent = MyAgent()
 
     # read command line argument(s)
     port = 4001

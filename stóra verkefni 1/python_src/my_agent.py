@@ -2,7 +2,7 @@ from agent import Agent
 import environment
 
 class MyAgent(Agent):
-    def __init__():
+    def __init__(self):
         self.role = None
         self.play_clock = None
         self.my_turn = False
