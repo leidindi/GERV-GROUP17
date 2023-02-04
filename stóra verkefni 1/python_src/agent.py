@@ -13,14 +13,7 @@ class Agent(object):
     def start(self, role, width, height, play_clock):
         print("start called")
         return
-    def alpha_beta(self):
-        pass
 
-    def alphabeta_root(self):
-        return alpha_beta()
-
-    def get_best_move(self):
-        return alphabeta_root()
     # this method is called on each time step of the environment
     # it needs to return the action the agent wants to execute as a string
     def next_action(self, last_move):
@@ -60,7 +53,7 @@ class RandomAgent(Agent):
         #  our action is the first
         self.width = width
         self.height = height
-        # add your own initialization code here
+        # TODO: add your own initialization code here
         return
 
     def next_action(self, last_action):
@@ -70,14 +63,14 @@ class RandomAgent(Agent):
             else:
                 last_player = 'black'
             print("%s moved from %s to %s" % (last_player, str(last_action[0:2]), str(last_action[2:4])))
-            # update your internal world model according to the action that was just executed
+            # TODO: 1. update your internal world model according to the action that was just executed
         else:
             print("first move!")
 
         # update turn (above that line it myTurn is still for the previous state)
         self.my_turn = not self.my_turn
         if self.my_turn:
-            # 2. run alpha-beta search to determine the best move
+            # TODO: 2. run alpha-beta search to determine the best move
 
             # Here we just construct a random move (that will most likely not even be possible),
             # this needs to be replaced with the actual best move.
