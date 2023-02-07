@@ -1,6 +1,6 @@
 from agent import Agent
 from environment import *
-
+#prufa git
 class MyAgent(Agent):
     def __init__(self):
         self.role = None
