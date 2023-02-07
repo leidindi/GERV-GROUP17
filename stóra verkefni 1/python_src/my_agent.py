@@ -1,6 +1,7 @@
 from agent import Agent
 from environment import *
 #prufa git
+#prufum ennþá meira
 #prufa meira
 class MyAgent(Agent):
     def __init__(self):
