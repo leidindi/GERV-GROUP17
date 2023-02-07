@@ -1,5 +1,5 @@
 from agent import Agent
-import environment
+from environment import *
 
 class MyAgent(Agent):
     def __init__(self):
@@ -12,13 +12,13 @@ class MyAgent(Agent):
 
     
     def alpha_beta(self):
-        pass
+        return True
 
     def alphabeta_root(self):
-        return alpha_beta()
+        return self.alpha_beta()
 
     def get_best_move(self):
-        return alphabeta_root()
+        return self.alphabeta_root()
 
 
     # start() is called once before you have to select the first action. Use it to initialize the agent.

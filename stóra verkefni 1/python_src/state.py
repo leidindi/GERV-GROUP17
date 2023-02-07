@@ -1,5 +1,5 @@
 WHITE, BLACK, EMPTY = "W", "B", " "
-
+print()
 class State:
     def __init__(self, width, height):
         self.board = [[WHITE]*width if i < 2 else
