@@ -2,14 +2,16 @@ from agent import Agent
 from environment import *
 
 
-class GeneralNode:
-    def __init__(self, heuristic=0, node_lis=None, alpha=-float('inf'), beta=float('inf'), parent=None,move=None,state=None):
+class Node:
+    def __init__(self, heuristic=1, alpha=-float('inf'), beta=float('inf'), parent=None,move=None,state=None):
         self.alpha = alpha
         self.beta = beta
+
         self.parent = parent
+
         self.move = move
         self.best = None
-        self.heuristic = heuristic
+        self.heuristic = env.heuristic(state)
         self.state = state
         self.children = []
 
@@ -42,12 +44,13 @@ def minimax_ab(node, depth):
 
 class GeneralTree:
     def __init__(self, limit = 5, depth = 0, state = None):
-        self.root = None
         self.limit = limit
         self.depth = depth
         self.state = state
+        self.root = None
         if state == None:
             raise EnvironmentError
+
     def populate_tree(self):
         self.root = self.populate_tree_recur()
 
@@ -56,7 +59,7 @@ class GeneralTree:
         if data == "":
             return ""
         node = GeneralNode(data)
-        for move in env.
+        for move in env.get_legal_moves()
             child = self.populate_tree_recur()
             if child == "":
                 break
@@ -67,8 +70,9 @@ class GeneralTree:
         if self.depth == self.limit:
             return None
 
-    def alphabeta_root(self):
-        under_root = []
+    def solve(self):
+        self.root = Node()
+
         for x in env.get_legal_moves(self.state):
             under_root.append()
 
@@ -85,8 +89,7 @@ class MyAgent(Agent):
 
     def get_best_move(self,limit=5):
         tree = GeneralTree(state=self.env.current_state,limit=limit)
-        tree.alphabeta_root()
-        return tree.root.best
+        return tree.solve()
 
 
     # start() is called once before you have to select the first action. Use it to initialize the agent.

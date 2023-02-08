@@ -90,6 +90,21 @@ class Environment:
 
         state.white_turn = not state.white_turn
 
+    def heuristic(self, state):
+        value = 0
+        for y, row in enumerate(state[2:self.height - 2]):
+            for x, column in enumerate(row):
+                # if white is in midsection
+                if column == "W":
+                    value += y
+        for y, row in enumerate(state[self.height - 2:]):
+            for x, column in enumerate(row):
+                # if white is in blacks space
+                if column == "W":
+                    value += 2*y
+        return value
+
+
 if __name__ == "__main__":
     env = Environment(7,7)
     print(env.current_state)
