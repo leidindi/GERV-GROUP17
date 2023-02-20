@@ -138,7 +138,6 @@ def main():
     # use your own agent here
     # agent = RandomAgent()
     agent = MyAgent()
-
     # read command line argument(s)
     port = 4001
     if len(sys.argv) == 2:
